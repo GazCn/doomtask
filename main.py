@@ -8,17 +8,16 @@ print("This is my task app")
 # saved in JSON Dict - figure out how json works
 
 import sys
-from tasks import Tasks
 import json
-
+import os
 
 def add_task(task):
+    if os.path.exists("tasks_store.json") != True:
+        with open("tasks_store.json", "w") as file:
+            file.close()
     num = sum(1 for line in open("tasks_store.json"))
     new_task = {"task_massage": task, "task_number": (num + 1), "progress": "in progress", "status": "not finished"}
-    with open("tasks_store.json", mode="r+") as file:
-        file_data = json.load(file)
-        file_data["tasks"].append(new_task)
-        file.seek(0)
+    with open("tasks_store.json", mode="a") as file:
         json.dump(new_task, file, indent=4)
     
 
